@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LogMyWay.MapPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LogMyWay;assembly=LogMyWay">
+    <AbsoluteLayout
+        BackgroundColor="Green"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <local:CustomMap
+            x:Name="customMap"
+            HeightRequest="{x:Static local:App.ScreenHeight}"
+            IsShowingUser="True"
+            MapType="Street"
+            WidthRequest="{x:Static local:App.ScreenWidth}" />
+
+
+    </AbsoluteLayout>
+</ContentPage>
