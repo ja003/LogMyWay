@@ -1,19 +1,15 @@
-﻿using System;
-
+﻿using Android;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Android.Runtime;
 using Android.Support.V4.App;
-using Android;
 
 namespace LogMyWay.Droid
 {
-    [Activity(Label = "LogMyWay", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    {
+	 [Activity(Label = "LogMyWay", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	 public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+	 {
 		  private Bundle _savedInstanceState;
 		  private const int REQUEST_CODE_AccessFineLocation = 1000;
 
@@ -41,6 +37,9 @@ namespace LogMyWay.Droid
 				LoadApplication(new App());
 		  }
 
+		  /// <summary>
+		  /// Store screen size - map is then scaled based on these values
+		  /// </summary>
 		  private void SetSize()
 		  {
 				var width = Resources.DisplayMetrics.WidthPixels;
@@ -51,6 +50,9 @@ namespace LogMyWay.Droid
 				App.ScreenHeight = (height - 0.5f) / density;
 		  }
 
+		  /// <summary>
+		  /// Calls Init after location permission is obtained
+		  /// </summary>
 		  public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
 		  {
 				switch(requestCode)

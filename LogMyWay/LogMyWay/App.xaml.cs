@@ -10,6 +10,10 @@ namespace LogMyWay
 		  public static double ScreenHeight;
 		  public static double ScreenWidth;
 
+		  public CustomMap Map => ((MapPage)MainPage).GetMap();
+
+		  public new static App Current;
+
 		  public App()
 		  {
 				InitializeComponent();
@@ -20,6 +24,7 @@ namespace LogMyWay
 		  protected override void OnStart()
 		  {
 				// Handle when your app starts
+				Current = this;
 		  }
 
 		  protected override void OnSleep()
