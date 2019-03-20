@@ -1,6 +1,6 @@
-﻿using System;
+﻿using LogMyWay.Data;
+using System;
 using System.Collections.Generic;
-using LogMyWay.Data;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,14 +16,7 @@ namespace LogMyWay
 		{
 			InitializeComponent();
 			BindingContext = this;
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
-			Debug("Init");
+			//Debug.Log("Init"); //cant debug yet
 		}
 
 		public CustomMap GetMap()
@@ -32,7 +25,7 @@ namespace LogMyWay
 		}
 
 
-		private string debugText;
+		private string debugText = "_";
 		public string DebugText
 		{
 			get => debugText;
@@ -43,15 +36,15 @@ namespace LogMyWay
 			}
 		}
 
-		public void Debug(string pText)
-		{
-			DebugText += Environment.NewLine + pText;
-			//debugText.Text += Environment.NewLine + pText;
-		}
+		//public void Debug(string pText)
+		//{
+		//	DebugText += Environment.NewLine + pText;
+		//	//debugText.Text += Environment.NewLine + pText;
+		//}
 
 		public void OnStart()
 		{
-			Debug("OnStart");
+			Debug.Log("OnStart");
 			LoadSavedLocations();
 		}
 
@@ -61,13 +54,14 @@ namespace LogMyWay
 
 			if(savedLocationsNames == null)
 			{
-				App.Current.MapPage.Debug("no locations yet");
+				Debug.Log("no locations yet");
 			}
 			else
 			{
+				Debug.Log($"#locations = {savedLocationsNames.Count}");
 				foreach(string location in savedLocationsNames)
 				{
-					App.Current.MapPage.Debug($"{savedLocationsNames.IndexOf(location)} = {location}");
+					Debug.Log($"{savedLocationsNames.IndexOf(location)} = {location}");
 				}
 			}
 		}

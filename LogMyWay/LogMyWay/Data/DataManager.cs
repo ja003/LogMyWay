@@ -2,26 +2,28 @@
 using Newtonsoft.Json;
 using PCLStorage;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LogMyWay.Data
 {
+	/// <summary>
+	/// Save/Load to all data structures - LocationLogs
+	/// - each Location info is stored in seperate file
+	/// </summary>
 	public static class DataManager
 	{
+		private const string LOCATIONS_FOLDER_NAME = "locations";
+
 		public static async Task<List<string>> GetSavedLocationsNames()
 		{
-			IFolder folder = FileSystem.Current.LocalStorage;
+			IFolder folder = await GetLocationSaveFolder();
+
 			IList<IFile> allFilesInFolder = await folder.GetFilesAsync();
-			if(allFilesInFolder == null)
-				return null;
 
-			List<string> names = new List<string>();
-			foreach(IFile f in allFilesInFolder)
-			{
-				names.Add(f.Name);
-			}
-
-			return names;
+			//return all file names in list
+			return allFilesInFolder?.Select(f => f.Name).ToList();
 		}
 
 		public static async void SaveLocation(LocationLog pLocation)
@@ -36,6 +38,24 @@ namespace LogMyWay.Data
 			LocationLog savedLocation = JsonConvert.DeserializeObject<LocationLog>(serializedLocation);
 
 			return savedLocation;
+		}
+
+		/// <summary>
+		/// Returns folder containing all location files.
+		/// If not exists -> creates it
+		/// </summary>
+		/// <returns></returns>
+		private static async Task<IFolder> GetLocationSaveFolder()
+		{
+			IFolder rootFolder = FileSystem.Current.LocalStorage;
+
+			bool isFolderExist = await LOCATIONS_FOLDER_NAME.IsFolderExistAsync();
+
+			IFolder locationFolder = isFolderExist
+				? await rootFolder.GetFolderAsync(LOCATIONS_FOLDER_NAME)
+				: await LOCATIONS_FOLDER_NAME.CreateFolder(rootFolder);
+
+			return locationFolder;
 		}
 	}
 }

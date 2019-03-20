@@ -18,10 +18,10 @@ namespace LogMyWay
 		public App()
 		{
 			InitializeComponent();
+			Current = this;
 
 			MainPage = new MapPage();
 
-			Current = this;
 			//MapPage.OnStart();
 		}
 
