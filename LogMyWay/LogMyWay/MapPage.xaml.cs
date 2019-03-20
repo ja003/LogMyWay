@@ -1,6 +1,7 @@
 ﻿using LogMyWay.Data;
 using System;
 using System.Collections.Generic;
+using LogMyWay.Location;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,6 +18,8 @@ namespace LogMyWay
 			InitializeComponent();
 			BindingContext = this;
 			//Debug.Log("Init"); //cant debug yet
+
+			btnCreateLocation.Clicked += LocationManager.CreateLocation;
 		}
 
 		public CustomMap GetMap()
@@ -32,38 +35,29 @@ namespace LogMyWay
 			set
 			{
 				debugText = value;
-				OnPropertyChanged(nameof(DebugText)); // Notify that there was a change on this property
+				OnPropertyChanged(nameof(DebugText)); 
 			}
 		}
 
-		//public void Debug(string pText)
-		//{
-		//	DebugText += Environment.NewLine + pText;
-		//	//debugText.Text += Environment.NewLine + pText;
-		//}
+		private bool isCreateBtnVisible;
+		public bool IsCreateBtnVisible
+		{
+			get => isCreateBtnVisible;
+			set
+			{
+				isCreateBtnVisible = value;
+				OnPropertyChanged(nameof(IsCreateBtnVisible)); 
+			}
+		}
+
+		public string NewLocationName => textNewLocationName.Text;
 
 		public void OnStart()
 		{
 			Debug.Log("OnStart");
-			LoadSavedLocations();
+			LocationManager.LoadSavedLocations();
 		}
 
-		private async void LoadSavedLocations()
-		{
-			List<string> savedLocationsNames = await DataManager.GetSavedLocationsNames();
-
-			if(savedLocationsNames == null)
-			{
-				Debug.Log("no locations yet");
-			}
-			else
-			{
-				Debug.Log($"#locations = {savedLocationsNames.Count}");
-				foreach(string location in savedLocationsNames)
-				{
-					Debug.Log($"{savedLocationsNames.IndexOf(location)} = {location}");
-				}
-			}
-		}
+		
 	}
 }

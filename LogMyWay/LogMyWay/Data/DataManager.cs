@@ -26,10 +26,12 @@ namespace LogMyWay.Data
 			return allFilesInFolder?.Select(f => f.Name).ToList();
 		}
 
-		public static async void SaveLocation(LocationLog pLocation)
+		public static async Task<bool> SaveLocation(LocationLog pLocation)
 		{
 			string serializedLocation = JsonConvert.SerializeObject(pLocation, Formatting.Indented);
-			await pLocation.Name.WriteTextAllAsync(serializedLocation);
+			//todo: check if fail -> return false
+			await pLocation.Name.WriteTextAllAsync(serializedLocation, await GetLocationSaveFolder());
+			return true;
 		}
 
 		public static async Task<LocationLog> LoadLocation(string pLocationName)
