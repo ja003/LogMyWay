@@ -28,15 +28,15 @@ namespace LogMyWay.Droid
 
 
 		  ///OVERRIDES
-		  private bool onMapReadyCaled;
+		  private bool onMapReadyCalled;
 
 		  protected override void OnMapReady(GoogleMap googleMap)
 		  {
 				base.OnMapReady(googleMap);
 
-				if(onMapReadyCaled)
+				if(onMapReadyCalled)
 					 return;
-				onMapReadyCaled = true;
+				onMapReadyCalled = true;
 
 				//move to current location only at first call
 				LocationManager.MoveToCurrentPosition();

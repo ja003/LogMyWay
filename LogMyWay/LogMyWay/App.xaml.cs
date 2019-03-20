@@ -5,36 +5,43 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace LogMyWay
 {
-	 public partial class App : Application
-	 {
-		  public static double ScreenHeight;
-		  public static double ScreenWidth;
+	public partial class App : Application
+	{
+		public static double ScreenHeight;
+		public static double ScreenWidth;
 
-		  public CustomMap Map => ((MapPage)MainPage).GetMap();
+		public CustomMap Map => MapPage.GetMap();
+		public MapPage MapPage => (MapPage) MainPage;
 
-		  public new static App Current;
+		public new static App Current;
 
-		  public App()
-		  {
-				InitializeComponent();
+		public App()
+		{
+			InitializeComponent();
 
-				MainPage = new MapPage();
-		  }
+			MainPage = new MapPage();
 
-		  protected override void OnStart()
-		  {
-				// Handle when your app starts
-				Current = this;
-		  }
+			Current = this;
+			//MapPage.OnStart();
+		}
 
-		  protected override void OnSleep()
-		  {
-				// Handle when your app sleeps
-		  }
+		//public event EventHandler OnStarted;
 
-		  protected override void OnResume()
-		  {
-				// Handle when your app resumes
-		  }
-	 }
+		protected override void OnStart()
+		{
+			// Handle when your app starts
+			//Current = this;
+			//MapPage.OnStart();
+		}
+
+		protected override void OnSleep()
+		{
+			// Handle when your app sleeps
+		}
+
+		protected override void OnResume()
+		{
+			// Handle when your app resumes
+		}
+	}
 }

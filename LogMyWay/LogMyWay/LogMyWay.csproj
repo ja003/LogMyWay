@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Forms9Patch" Version="1.6.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="PCLStorage" Version="1.0.2" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.4-beta" />
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.232914-pre6" />
     <PackageReference Include="Xamarin.Forms.Maps" Version="4.0.0.232914-pre6" />

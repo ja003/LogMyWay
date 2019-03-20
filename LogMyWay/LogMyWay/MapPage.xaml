@@ -3,7 +3,9 @@
     x:Class="LogMyWay.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:LogMyWay;assembly=LogMyWay">
+    xmlns:local="clr-namespace:LogMyWay;assembly=LogMyWay"
+    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
+    >
     <AbsoluteLayout
         BackgroundColor="Green"
         HorizontalOptions="Fill"
@@ -16,6 +18,40 @@
             MapType="Street"
             WidthRequest="{x:Static local:App.ScreenWidth}" />
 
+        <!--<Label 
+            x:Name="debugText"
+            AbsoluteLayout.LayoutBounds=".5, .9, 1, .2"
+            AbsoluteLayout.LayoutFlags="PositionProportional, XProportional"
+            BackgroundColor="Coral"
+            TextColor="Black"
+            Text="Sample debug"/>-->
+
+        <!--<Label 
+            x:Name="debugTextLabel"
+            Text={Binding DebugText}
+            AbsoluteLayout.LayoutBounds=".5, .9, 1, .2"
+            AbsoluteLayout.LayoutFlags="All"
+            BackgroundColor="Coral"
+            TextColor="Black" 
+        >
+        </Label>-->
+
+        <f9p:Label 
+                   x:Name="debugTextLabel"
+                   Text="{Binding DebugText}"
+            Margin="5"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End"
+            AnchorY="1"
+                    Lines="0"
+                   BackgroundColor="Coral"
+                    TextColor="Black" 
+        />
+
+        <!--<Grid 
+            AbsoluteLayout.LayoutBounds=".5, .95, 1, .2"
+            AbsoluteLayout.LayoutFlags="All"BackgroundColor="Blue"
+            ></Grid>-->
 
     </AbsoluteLayout>
 </ContentPage>
