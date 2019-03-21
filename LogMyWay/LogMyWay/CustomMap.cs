@@ -2,7 +2,9 @@
 
 namespace LogMyWay
 {
-	 public class CustomMap : Map
-	 {
-	 }
+	public class CustomMap : Map
+	{
+		public ICustomMapRenderer Renderer;
+
+	}
 }

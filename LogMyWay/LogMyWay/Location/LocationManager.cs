@@ -56,6 +56,7 @@ namespace LogMyWay.Location
 			activeLocation = pLocation;
 			//draw
 			Debug.Log($"SetActiveLocation {pLocation.Name}");
+			map.Renderer.DrawLocation(pLocation, EGridStep.Small); //todo: store gridStep, change
 		}
 
 		/*private static void SetCreateLocation(bool pActive)
@@ -64,10 +65,10 @@ namespace LogMyWay.Location
 			App.Current.MapPage.IsCreateActive = pActive;
 		}*/
 
-		public static async void CreateLocation(string pName)
+		public static async void CreateLocation(string pName, int pRadius)
 		{
 			Debug.Log($"CreateLocation {pName}");
-			LocationLog newLocation = new LocationLog(pName, map.VisibleRegion.Center);
+			LocationLog newLocation = new LocationLog(pName, map.VisibleRegion.Center, pRadius);
 			bool saveResult = await DataManager.SaveLocation(newLocation);
 			Debug.Log($"saveResult {saveResult}");
 			//todo: handle save fail

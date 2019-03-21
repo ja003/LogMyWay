@@ -7,21 +7,23 @@ namespace LogMyWay.Location
 	{
 		public string Name;
 		public Position Center;
+		public int RadiusSteps;
 		public List<Position> LoggedPositions = new List<Position>();
 
-		public LocationLog(string name, Position center)
+		public LocationLog(string pName, Position pCenter, int pRadiusSteps)
 		{
-			Name = name;
-			Center = center;
+			Name = pName;
+			Center = pCenter;
+			RadiusSteps = pRadiusSteps;
 		}
 
-		public void LogPosition(Position position)
+		public void LogPosition(Position pPosition)
 		{
 			if(LoggedPositions == null)
 			{
 				LoggedPositions = new List<Position>();
 			}
-			LoggedPositions.Add(position);
+			LoggedPositions.Add(pPosition);
 		}
 	}
 }

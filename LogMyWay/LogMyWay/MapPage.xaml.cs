@@ -97,7 +97,7 @@ namespace LogMyWay
 			//confirm creation
 			if (!IsCreateActive)
 			{
-				LocationManager.CreateLocation(NewLocationName);
+				LocationManager.CreateLocation(NewLocationName, 10); //todo: define radius
 			}
 		}
 	}
