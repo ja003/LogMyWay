@@ -1,6 +1,4 @@
-﻿using LogMyWay.Data;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using LogMyWay.Location;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,20 +11,7 @@ namespace LogMyWay
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MapPage : ContentPage
 	{
-		public MapPage()
-		{
-			InitializeComponent();
-			BindingContext = this;
-			//Debug.Log("Init"); //cant debug yet
-
-			btnCreateLocation.Clicked += LocationManager.CreateLocation;
-		}
-
-		public CustomMap GetMap()
-		{
-			return customMap;
-		}
-
+		#region Properties
 
 		private string debugText = "_";
 		public string DebugText
@@ -35,22 +20,64 @@ namespace LogMyWay
 			set
 			{
 				debugText = value;
-				OnPropertyChanged(nameof(DebugText)); 
+				OnPropertyChanged(nameof(DebugText));
 			}
 		}
 
-		private bool isCreateBtnVisible;
-		public bool IsCreateBtnVisible
+		private const string TEXT_CREATE = "+";
+		private const string TEXT_CONFIRM = "OK";
+
+		private string createBtnText = TEXT_CREATE;
+		public string CreateBtnText
 		{
-			get => isCreateBtnVisible;
+			get => createBtnText;
 			set
 			{
-				isCreateBtnVisible = value;
-				OnPropertyChanged(nameof(IsCreateBtnVisible)); 
+				createBtnText = value;
+				OnPropertyChanged(nameof(CreateBtnText));
 			}
 		}
 
-		public string NewLocationName => textNewLocationName.Text;
+		private bool _isCreateActive;
+		public bool IsCreateActive
+		{
+			get => _isCreateActive;
+			set
+			{
+				_isCreateActive = value;
+				CreateBtnText = value ? TEXT_CONFIRM : TEXT_CREATE;
+				OnPropertyChanged(nameof(IsCreateActive));
+			}
+		}
+
+		private bool isDebugVisible;
+		public bool IsDebugVisible
+		{
+			get => isDebugVisible;
+			set
+			{
+				isDebugVisible = value;
+				OnPropertyChanged(nameof(IsDebugVisible));
+			}
+		}
+
+		public string NewLocationName => entryNewLocationName.Text;
+		#endregion
+
+		public MapPage()
+		{
+			InitializeComponent();
+			BindingContext = this;
+			//Debug.Log("Init"); //cant debug yet
+
+			//btnCreateLocation.Clicked += LocationManager.CreateLocation;
+		}
+
+		public CustomMap GetMap()
+		{
+			return customMap;
+		}
+
 
 		public void OnStart()
 		{
@@ -58,6 +85,20 @@ namespace LogMyWay
 			LocationManager.LoadSavedLocations();
 		}
 
-		
+		private void BtnToggleDebug_OnClicked(object sender, EventArgs e)
+		{
+			IsDebugVisible = !IsDebugVisible;
+		}
+
+		private void BtnCreateLocation_OnClicked(object sender, EventArgs e)
+		{
+			IsCreateActive = !IsCreateActive;
+
+			//confirm creation
+			if (!IsCreateActive)
+			{
+				LocationManager.CreateLocation(NewLocationName);
+			}
+		}
 	}
 }

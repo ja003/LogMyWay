@@ -36,7 +36,7 @@
         </Label>-->
 
         <Grid
-            AbsoluteLayout.LayoutBounds=".5, 0, 1, .3"
+            AbsoluteLayout.LayoutBounds=".5, 0, 1, .2"
             AbsoluteLayout.LayoutFlags="All"
             BackgroundColor="Blue">
 
@@ -47,36 +47,127 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Button
-                x:Name="btnCreateLocation"
+            <!--  detail  -->
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                BackgroundColor="Aqua">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="1x" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="2x" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="3x" />
+            </Grid>
+
+            <!--  location selection  -->
+
+            <Picker
+                x:Name="pickerLocation"
+                Grid.Row="0"
+                Grid.Column="1">
+                <Picker.Items>
+                    <x:String>ITEM 1</x:String>
+                    <x:String>ITEM 2</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!--  progress  -->
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="4/30 = 15%" />
+
+            <!--  create location. todo: create in picker - set name in dialog  -->
+            <Grid
                 Grid.Row="1"
                 Grid.Column="1"
-                BackgroundColor="Red"
-                IsVisible="{Binding IsCreateBtnVisible}"
-                Text="create" />
-            <Entry
-                x:Name="textNewLocationName"
-                Grid.Row="2"
-                Grid.Column="1"
-                BackgroundColor="Green"
-                IsVisible="{Binding IsCreateBtnVisible}" />
+                BackgroundColor="Yellow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Entry
+                    x:Name="entryNewLocationName"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="Green"
+                    IsVisible="{Binding IsCreateBtnVisible}" />
+                <Button
+                    x:Name="btnCreateLocation"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    BackgroundColor="Red"
+                    Clicked="BtnCreateLocation_OnClicked"
+                    IsVisible="{Binding IsCreateBtnVisible}"
+                    Text="{Binding CreateBtnText}" />
+
+            </Grid>
+
 
         </Grid>
 
 
+        <!--  DEBUG  -->
         <f9p:Label
             x:Name="debugTextLabel"
-            Margin="5"
             AnchorY="1"
             BackgroundColor="Coral"
             HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding IsDebugVisible}"
             Lines="0"
             Text="{Binding DebugText}"
             TextColor="Black"
             VerticalOptions="End" />
+
+
+        <Grid
+            AbsoluteLayout.LayoutBounds=".5, 1, 1, .1"
+            AbsoluteLayout.LayoutFlags="All"
+            AnchorY="1"
+            BackgroundColor="Blue">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button
+                x:Name="btnToggleDebug"
+                Grid.Row="0"
+                Grid.Column="0"
+                BackgroundColor="Red"
+                Clicked="BtnToggleDebug_OnClicked"
+                Text="debug" />
+
+
+        </Grid>
 
         <!--<f9p:Label
                    x:Name="debugTextLabel"

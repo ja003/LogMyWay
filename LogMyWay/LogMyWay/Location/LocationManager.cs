@@ -37,7 +37,7 @@ namespace LogMyWay.Location
 			if(noLocationSaved)
 			{
 				Debug.Log("no locations yet");
-				SetCreateLocation(true);
+				//SetCreateLocation(true); //user creates himself
 				return;
 			}
 
@@ -58,24 +58,37 @@ namespace LogMyWay.Location
 			Debug.Log($"SetActiveLocation {pLocation.Name}");
 		}
 
-		private static void SetCreateLocation(bool pActive)
+		/*private static void SetCreateLocation(bool pActive)
 		{
 			Debug.Log($"SetCreateLocation {pActive}");
-			App.Current.MapPage.IsCreateBtnVisible = pActive;
-		}
+			App.Current.MapPage.IsCreateActive = pActive;
+		}*/
 
-		public static async void CreateLocation(object sender, EventArgs e)
+		public static async void CreateLocation(string pName)
 		{
-			//todo: get name from eventArgs
-			string name = App.Current.MapPage.NewLocationName;
-			Debug.Log($"CreateLocation {name}");
-			LocationLog newLocation = new LocationLog(name, map.VisibleRegion.Center);
+			Debug.Log($"CreateLocation {pName}");
+			LocationLog newLocation = new LocationLog(pName, map.VisibleRegion.Center);
 			bool saveResult = await DataManager.SaveLocation(newLocation);
 			Debug.Log($"saveResult {saveResult}");
 			//todo: handle save fail
 			locations.Add(newLocation);
 			SetActiveLocation(newLocation);
-			SetCreateLocation(false);
+			//SetCreateLocation(false);
 		}
+
+
+		//public static async void CreateLocation(object sender, EventArgs e)
+		//{
+		//	//todo: get name from eventArgs
+		//	string name = App.Current.MapPage.NewLocationName;
+		//	Debug.Log($"CreateLocation {name}");
+		//	LocationLog newLocation = new LocationLog(name, map.VisibleRegion.Center);
+		//	bool saveResult = await DataManager.SaveLocation(newLocation);
+		//	Debug.Log($"saveResult {saveResult}");
+		//	//todo: handle save fail
+		//	locations.Add(newLocation);
+		//	SetActiveLocation(newLocation);
+		//	SetCreateLocation(false);
+		//}
 	}
 }
