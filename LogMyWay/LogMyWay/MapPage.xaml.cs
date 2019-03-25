@@ -100,5 +100,10 @@ namespace LogMyWay
 				LocationManager.CreateLocation(NewLocationName, 10); //todo: define radius
 			}
 		}
+
+		private void BtnArrowUp_Clicked(object sender, EventArgs e)
+		{
+			Debug.Log("move up");
+		}
 	}
 }

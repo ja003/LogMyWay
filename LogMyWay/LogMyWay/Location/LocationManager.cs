@@ -81,6 +81,11 @@ namespace LogMyWay.Location
 			//SetCreateLocation(false);
 		}
 
+		public static async void LogPosition(Position pPosition)
+		{
+			activeLocation.LogPosition(pPosition);
+			await DataManager.SaveLocation(activeLocation);
+		}
 
 		//public static async void CreateLocation(object sender, EventArgs e)
 		//{

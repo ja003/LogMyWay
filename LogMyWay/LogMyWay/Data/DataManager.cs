@@ -25,6 +25,9 @@ namespace LogMyWay.Data
 			return allFilesInFolder?.Select(f => f.Name).ToList();
 		}
 
+		/// <summary>
+		/// Create or update location file
+		/// </summary>
 		public static async Task<bool> SaveLocation(LocationLog pLocation)
 		{
 			string serializedLocation = JsonConvert.SerializeObject(pLocation, Formatting.Indented);

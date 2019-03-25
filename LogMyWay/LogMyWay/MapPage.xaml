@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="LogMyWay.MapPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
-    xmlns:local="clr-namespace:LogMyWay;assembly=LogMyWay">
-    <AbsoluteLayout
-        BackgroundColor="Green"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill">
+	x:Class="LogMyWay.MapPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:f9p="clr-namespace:Forms9Patch;assembly=Forms9Patch"
+	xmlns:local="clr-namespace:LogMyWay;assembly=LogMyWay">
+	<AbsoluteLayout
+		BackgroundColor="Green"
+		HorizontalOptions="Fill"
+		VerticalOptions="Fill">
 
-        <local:CustomMap
-            x:Name="customMap"
-            HeightRequest="{x:Static local:App.ScreenHeight}"
-            IsShowingUser="True"
-            MapType="Street"
-            WidthRequest="{x:Static local:App.ScreenWidth}" />
+		<local:CustomMap
+			x:Name="customMap"
+			HeightRequest="{x:Static local:App.ScreenHeight}"
+			IsShowingUser="True"
+			MapType="Street"
+			WidthRequest="{x:Static local:App.ScreenWidth}" />
 
-        <!--<Label
+		<!--<Label
             x:Name="debugText"
             AbsoluteLayout.LayoutBounds=".5, .9, 1, .2"
             AbsoluteLayout.LayoutFlags="PositionProportional, XProportional"
@@ -25,7 +25,7 @@
             TextColor="Black"
             Text="Sample debug"/>-->
 
-        <!--<Label
+		<!--<Label
             x:Name="debugTextLabel"
             Text={Binding DebugText}
             AbsoluteLayout.LayoutBounds=".5, .9, 1, .2"
@@ -35,141 +35,190 @@
         >
         </Label>-->
 
-        <Grid
-            AbsoluteLayout.LayoutBounds=".5, 0, 1, .2"
-            AbsoluteLayout.LayoutFlags="All"
-            BackgroundColor="Blue">
+		<Grid
+			AbsoluteLayout.LayoutBounds=".5, 0, 1, .2"
+			AbsoluteLayout.LayoutFlags="All"
+			BackgroundColor="Blue">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 
-            <!--  detail  -->
-            <Grid
-                Grid.Row="0"
-                Grid.Column="0"
-                BackgroundColor="Aqua">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+			<!--  detail  -->
+			<Grid
+				Grid.Row="0"
+				Grid.Column="0"
+				BackgroundColor="Aqua">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
 
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text="1x" />
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="2x" />
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Text="3x" />
-            </Grid>
+				<Button
+					Grid.Row="0"
+					Grid.Column="0"
+					Text="1x" />
+				<Button
+					Grid.Row="0"
+					Grid.Column="1"
+					Text="2x" />
+				<Button
+					Grid.Row="0"
+					Grid.Column="2"
+					Text="3x" />
+			</Grid>
 
-            <!--  location selection  -->
+			<!--  location selection  -->
 
-            <Picker
-                x:Name="pickerLocation"
-                Grid.Row="0"
-                Grid.Column="1">
-                <Picker.Items>
-                    <x:String>ITEM 1</x:String>
-                    <x:String>ITEM 2</x:String>
-                </Picker.Items>
-            </Picker>
+			<Picker
+				x:Name="pickerLocation"
+				Grid.Row="0"
+				Grid.Column="1">
+				<Picker.Items>
+					<x:String>ITEM 1</x:String>
+					<x:String>ITEM 2</x:String>
+				</Picker.Items>
+			</Picker>
 
-            <!--  progress  -->
+			<!--  progress  -->
 
-            <Label
-                Grid.Row="1"
-                Grid.Column="0"
-                Text="4/30 = 15%" />
+			<Label
+				Grid.Row="1"
+				Grid.Column="0"
+				Text="4/30 = 15%" />
 
-            <!--  create location. todo: create in picker - set name in dialog  -->
-            <Grid
-                Grid.Row="1"
-                Grid.Column="1"
-                BackgroundColor="Yellow">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+			<!--  create location. todo: create in picker - set name in dialog  -->
+			<Grid
+				Grid.Row="1"
+				Grid.Column="1"
+				BackgroundColor="Yellow">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
 
-                <Entry
-                    x:Name="entryNewLocationName"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    BackgroundColor="Green"
-                    IsVisible="{Binding IsCreateBtnVisible}" />
-                <Button
-                    x:Name="btnCreateLocation"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    BackgroundColor="Red"
-                    Clicked="BtnCreateLocation_OnClicked"
-                    IsVisible="{Binding IsCreateBtnVisible}"
-                    Text="{Binding CreateBtnText}" />
+				<Entry
+					x:Name="entryNewLocationName"
+					Grid.Row="0"
+					Grid.Column="0"
+					BackgroundColor="Green"
+					IsVisible="{Binding IsCreateBtnVisible}" />
+				<Button
+					x:Name="btnCreateLocation"
+					Grid.Row="0"
+					Grid.Column="1"
+					BackgroundColor="Red"
+					Clicked="BtnCreateLocation_OnClicked"
+					IsVisible="{Binding IsCreateBtnVisible}"
+					Text="{Binding CreateBtnText}" />
 
-            </Grid>
-
-
-        </Grid>
+			</Grid>
 
 
-        <!--  DEBUG  -->
-        <f9p:Label
-            x:Name="debugTextLabel"
-            AnchorY="1"
-            BackgroundColor="Coral"
-            HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding IsDebugVisible}"
-            Lines="0"
-            Text="{Binding DebugText}"
-            TextColor="Black"
-            VerticalOptions="End" />
+		</Grid>
 
 
-        <Grid
-            AbsoluteLayout.LayoutBounds=".5, 1, 1, .1"
-            AbsoluteLayout.LayoutFlags="All"
-            AnchorY="1"
-            BackgroundColor="Blue">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Button
-                x:Name="btnToggleDebug"
-                Grid.Row="0"
-                Grid.Column="0"
-                BackgroundColor="Red"
-                Clicked="BtnToggleDebug_OnClicked"
-                Text="debug" />
+		<!--  DEBUG  -->
+		<f9p:Label
+			x:Name="debugTextLabel"
+			AnchorY="1"
+			BackgroundColor="Coral"
+			HorizontalOptions="FillAndExpand"
+			IsVisible="{Binding IsDebugVisible}"
+			Lines="0"
+			Text="{Binding DebugText}"
+			TextColor="Black"
+			VerticalOptions="End" />
 
 
-        </Grid>
+		<Grid
+			AbsoluteLayout.LayoutBounds=".5, 1, 1, .1"
+			AbsoluteLayout.LayoutFlags="All"
+			AnchorY="1"
+			BackgroundColor="Blue">
 
-        <!--<f9p:Label
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<!--  DEBUG  -->
+			<Button
+				x:Name="btnToggleDebug"
+				Grid.Row="0"
+				Grid.Column="0"
+				BackgroundColor="Red"
+				Clicked="BtnToggleDebug_OnClicked"
+				Text="debug" />
+
+			<!--  ARROWS  -->
+			<Grid Grid.Row="0" Grid.Column="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Button
+					x:Name="btnArrowUp"
+					Grid.Row="0"
+					Grid.Column="1"
+					BackgroundColor="Yellow"
+					Clicked="BtnArrowUp_Clicked"
+					Text="up" />
+				<Button
+					x:Name="btnArrowLeft"
+					Grid.Row="1"
+					Grid.Column="0"
+					BackgroundColor="Yellow"
+					Text="left" />
+				<Button
+					x:Name="btnArrowDown"
+					Grid.Row="1"
+					Grid.Column="1"
+					BackgroundColor="Yellow"
+					Text="down" />
+				<Button
+					x:Name="btnArrowRight"
+					Grid.Row="1"
+					Grid.Column="2"
+					BackgroundColor="Yellow"
+					Text="right" />
+
+			</Grid>
+
+			<!--  LOG  -->
+			<Button
+				x:Name="btnLog"
+				Grid.Row="0"
+				Grid.Column="2"
+				BackgroundColor="Green"
+				Text="log" />
+
+
+		</Grid>
+
+		<!--<f9p:Label
                    x:Name="debugTextLabel"
                    Text="{Binding DebugText}"
             Margin="5"
@@ -182,10 +231,10 @@
                     TextColor="Black"
         />-->
 
-        <!--<Grid
+		<!--<Grid
             AbsoluteLayout.LayoutBounds=".5, .95, 1, .2"
             AbsoluteLayout.LayoutFlags="All"BackgroundColor="Blue"
             ></Grid>-->
 
-    </AbsoluteLayout>
+	</AbsoluteLayout>
 </ContentPage>
