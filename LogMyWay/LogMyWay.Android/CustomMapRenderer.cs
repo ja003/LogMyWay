@@ -62,7 +62,8 @@ namespace LogMyWay.Droid
 
 		public void DrawLocation(LocationLog pLocation, EGridStep pStep)
 		{
-			LogMyWay.Debug.Log($"DrawLocation {pLocation.Name}, center = {pLocation.Center}");
+			LogMyWay.Debug.Log($"DrawLocation {pLocation.Name}, " +
+				$"center = {pLocation.Center.Latitude.ToString("0.00")},{pLocation.Center.Longitude.ToString("0.00")}");
 
 			NativeMap.Clear();
 			List<PolylineOptions> lines = ShapeGenerator.GetLines(pLocation, pStep);

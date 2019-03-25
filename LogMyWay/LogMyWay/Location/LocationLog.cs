@@ -7,7 +7,7 @@ namespace LogMyWay.Location
 	{
 		public string Name;
 		public Position Center;
-		public int RadiusSteps;
+		public int RadiusSteps; //number of minimum size steps between center and border
 		public List<Position> LoggedPositions = new List<Position>();
 
 		public LocationLog(string pName, Position pCenter, int pRadiusSteps)

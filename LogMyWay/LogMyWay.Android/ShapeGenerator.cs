@@ -17,19 +17,32 @@ namespace LogMyWay.Droid
 			double longitude = topLeft.Longitude;
 
 			List<GridLine> lines = new List<GridLine>();
-			//left to right
 			int steps = GetStepsCount(pLocation.RadiusSteps, pStep);
 			double stepSize = GetStepSize(pStep);
 
-			for(int y = 0; y < 2 * steps; y++)
+			//top to bottom
+			for(int y = 0; y <= 2 * steps; y++)
 			{
-				latitude = topLeft.Latitude + y * stepSize;
+				latitude = topLeft.Latitude - y * stepSize; //from top to bottom => '-'
 
-				lines.Add(new GridLine(new Position(latitude, longitude), new Position(latitude, longitude + 2 * steps * stepSize)));
+				lines.Add(new GridLine(
+					 new Position(latitude, longitude),
+					 new Position(latitude, longitude + 2 * steps * stepSize)));
+			}
+
+			//left to right
+			latitude = topLeft.Latitude; //reset
+			for(int x = 0; x <= 2 * steps; x++)
+			{
+				longitude = topLeft.Longitude + x * stepSize;
+
+				lines.Add(new GridLine(
+					 new Position(latitude, longitude),
+					 new Position(latitude - 2 * steps * stepSize, longitude)));
 			}
 
 			List<PolylineOptions> polyLines = new List<PolylineOptions>();
-			foreach (GridLine line in lines)
+			foreach(GridLine line in lines)
 			{
 				PolylineOptions lineOptions = GetLine();
 
@@ -42,22 +55,27 @@ namespace LogMyWay.Droid
 			return polyLines;
 		}
 
-		private static double GetStepSize(EGridStep pStep)
+		private static int GetRadiusStep(EGridStep pStep)
 		{
-			int multiply = 1;
+			int radiusStep = 1;
 			switch(pStep)
 			{
 				case EGridStep.Small:
-					multiply = 1;
+					radiusStep = 1;
 					break;
 				case EGridStep.Medium:
-					multiply = 2;
+					radiusStep = 2;
 					break;
 				case EGridStep.Large:
-					multiply = 3;
+					radiusStep = 3;
 					break;
 			}
-			return MIN_GRID_STEP * multiply;
+			return radiusStep;
+		}
+
+		private static double GetStepSize(EGridStep pStep)
+		{
+			return MIN_GRID_STEP * GetRadiusStep(pStep);
 		}
 
 		private static PolylineOptions GetLine()
@@ -68,9 +86,13 @@ namespace LogMyWay.Droid
 			return lineOptions;
 		}
 
+		/// <summary>
+		/// Conversion of radius steps based on GridStep. 
+		/// EGridStep.Small => returns pLocationRadiusSteps
+		/// </summary>
 		private static int GetStepsCount(int pLocationRadiusSteps, EGridStep pStep)
 		{
-			return (int)(pLocationRadiusSteps / GetStepSize(pStep));
+			return pLocationRadiusSteps / GetRadiusStep(pStep);
 		}
 
 		public static CircleOptions GetCenter(LocationLog pLocation)

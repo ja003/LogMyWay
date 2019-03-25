@@ -1,5 +1,5 @@
-﻿using System;
-using LogMyWay.Location;
+﻿using LogMyWay.Location;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -95,7 +95,7 @@ namespace LogMyWay
 			IsCreateActive = !IsCreateActive;
 
 			//confirm creation
-			if (!IsCreateActive)
+			if(!IsCreateActive)
 			{
 				LocationManager.CreateLocation(NewLocationName, 10); //todo: define radius
 			}

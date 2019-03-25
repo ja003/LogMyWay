@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using PCLStorage;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace LogMyWay.Data
@@ -36,7 +35,8 @@ namespace LogMyWay.Data
 
 		public static async Task<LocationLog> LoadLocation(string pLocationName)
 		{
-			string serializedLocation = await pLocationName.ReadAllTextAsync();
+			IFolder folder = await GetLocationSaveFolder();
+			string serializedLocation = await pLocationName.ReadAllTextAsync(folder);
 			LocationLog savedLocation = JsonConvert.DeserializeObject<LocationLog>(serializedLocation);
 
 			return savedLocation;

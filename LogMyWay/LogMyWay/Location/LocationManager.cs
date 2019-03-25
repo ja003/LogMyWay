@@ -1,5 +1,4 @@
 ﻿using LogMyWay.Data;
-using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -48,7 +47,12 @@ namespace LogMyWay.Location
 				locations.Add(await DataManager.LoadLocation(locationName));
 			}
 
-			SetActiveLocation(locations[0]);
+			LocationLog activeLocation = locations[0];
+			if(activeLocation == null)
+			{
+				Debug.Log($"activeLocation is null");
+			}
+			SetActiveLocation(activeLocation);
 		}
 
 		private static void SetActiveLocation(LocationLog pLocation)
