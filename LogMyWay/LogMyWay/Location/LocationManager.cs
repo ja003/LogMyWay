@@ -1,5 +1,6 @@
 ﻿using LogMyWay.Data;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -12,7 +13,7 @@ namespace LogMyWay.Location
 	{
 		private static CustomMap map => ((App)Application.Current).Map;
 
-		private static List<LocationLog> locations = new List<LocationLog>();
+		public static List<LocationLog> Locations = new List<LocationLog>();
 		public static LocationLog ActiveLocation;
 
 		/// <summary>
@@ -44,23 +45,33 @@ namespace LogMyWay.Location
 			foreach(string locationName in savedLocationsNames)
 			{
 				Debug.Log($"{savedLocationsNames.IndexOf(locationName)} = {locationName}");
-				locations.Add(await DataManager.LoadLocation(locationName));
+				Locations.Add(await DataManager.LoadLocation(locationName));
 			}
 
-			LocationLog activeLocation = locations[0];
+			//todo: set last actve
+			LocationLog activeLocation = Locations[0];
 			if(activeLocation == null)
 			{
 				Debug.Log($"activeLocation is null");
 			}
-			SetActiveLocation(activeLocation);
+			App.Current.MapPage.OnLocationsLoaded();
+
+			SetActiveLocation(activeLocation.Name);
 		}
 
-		private static void SetActiveLocation(LocationLog pLocation)
+		public static void SetActiveLocation(string pLocationName)
 		{
-			ActiveLocation = pLocation;
+			LocationLog location = Locations.First(a => a.Name == pLocationName);
+			if(location == null)
+			{
+				Debug.Log($"location {pLocationName} not found");
+				return;
+			}
+
+			ActiveLocation = location;
 			//draw
-			Debug.Log($"SetActiveLocation {pLocation.Name}");
-			map.Renderer.DrawLocation(pLocation); 
+			Debug.Log($"SetActiveLocation {location.Name}");
+			map.Renderer.DrawLocation(location);
 			App.Current.MapPage.OnLocationSet();
 		}
 
@@ -77,8 +88,8 @@ namespace LogMyWay.Location
 			bool saveResult = await DataManager.SaveLocation(newLocation);
 			Debug.Log($"saveResult {saveResult}");
 			//todo: handle save fail
-			locations.Add(newLocation);
-			SetActiveLocation(newLocation);
+			Locations.Add(newLocation);
+			SetActiveLocation(newLocation.Name);
 			//SetCreateLocation(false);
 		}
 

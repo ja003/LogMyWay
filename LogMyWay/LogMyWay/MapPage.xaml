@@ -88,12 +88,8 @@
 			<Picker
 				x:Name="pickerLocation"
 				Grid.Row="0"
-				Grid.Column="1">
-				<Picker.Items>
-					<x:String>ITEM 1</x:String>
-					<x:String>ITEM 2</x:String>
-				</Picker.Items>
-			</Picker>
+				Grid.Column="1"
+				SelectedIndexChanged="PickerLocation_SelectedIndexChanged" />
 
 			<!--  progress  -->
 

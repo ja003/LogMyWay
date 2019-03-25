@@ -78,17 +78,44 @@ namespace LogMyWay
 
 			//btnCreateLocation.Clicked += LocationManager.CreateLocation;
 		}
+			  
+		public void OnStart()
+		{
+			Debug.Log("OnStart");
+			LocationManager.LoadSavedLocations();
+		}
 
 		public CustomMap GetMap()
 		{
 			return customMap;
 		}
 
-
-		public void OnStart()
+		/// <summary>
+		/// Load location names into picker
+		/// </summary>
+		internal void OnLocationsLoaded()
 		{
-			Debug.Log("OnStart");
-			LocationManager.LoadSavedLocations();
+			foreach(LocationLog location in LocationManager.Locations)
+			{
+				pickerLocation.Items.Add(location.Name);
+			}
+		}
+		
+		/// <summary>
+		/// Select active location
+		/// </summary>
+		internal void OnLocationSet()
+		{
+			Debug.Log($"OnLocationSet {LocationManager.ActiveLocation.Name}");
+			currentDebugPosition = LocationManager.ActiveLocation.Center;
+
+			pickerLocation.SelectedIndex = LocationManager.Locations.IndexOf(LocationManager.ActiveLocation);
+		}
+			  
+		private void PickerLocation_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			string locationName = pickerLocation.Items[pickerLocation.SelectedIndex];
+			LocationManager.SetActiveLocation(locationName);
 		}
 
 		private void BtnToggleDebug_OnClicked(object sender, EventArgs e)
@@ -107,11 +134,6 @@ namespace LogMyWay
 			}
 		}
 
-		internal void OnLocationSet()
-		{
-			Debug.Log($"OnLocationSet {LocationManager.ActiveLocation.Name}");
-			currentDebugPosition = LocationManager.ActiveLocation.Center;
-		}
 
 		#region arrows
 		private void BtnArrowUp_Clicked(object sender, EventArgs e)
