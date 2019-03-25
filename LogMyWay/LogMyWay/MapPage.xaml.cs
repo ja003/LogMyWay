@@ -106,10 +106,10 @@ namespace LogMyWay
 		/// </summary>
 		internal void OnLocationSet()
 		{
-			Debug.Log($"OnLocationSet {LocationManager.ActiveLocation.Name}");
-			currentDebugPosition = LocationManager.ActiveLocation.Center;
+			Debug.Log($"OnLocationSet {LocationManager.CurrentLocation.Name}");
+			currentDebugPosition = LocationManager.CurrentLocation.Center;
 
-			pickerLocation.SelectedIndex = LocationManager.Locations.IndexOf(LocationManager.ActiveLocation);
+			pickerLocation.SelectedIndex = LocationManager.Locations.IndexOf(LocationManager.CurrentLocation);
 		}
 			  
 		private void PickerLocation_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,7 +209,7 @@ namespace LogMyWay
 
 		private void SetGridStep(EGridStep pStep)
 		{
-			GetMap().CurrentGridStep = pStep;
+			GetMap().SetGridStep(pStep, true);
 		}
 		#endregion
 

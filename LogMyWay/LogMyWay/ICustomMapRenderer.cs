@@ -7,5 +7,6 @@ namespace LogMyWay
 	{
 		void DrawLocation(LocationLog pLocation);
 		void DrawLoggedPosition(Position pPosition);
+		void OnSetGridStep(bool pRedraw);
 	}
 }

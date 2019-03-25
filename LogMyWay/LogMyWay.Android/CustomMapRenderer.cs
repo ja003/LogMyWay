@@ -4,7 +4,6 @@ using Android.Gms.Maps.Model;
 using LogMyWay;
 using LogMyWay.Droid;
 using LogMyWay.Location;
-using LogMyWay.Structures;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -61,16 +60,32 @@ namespace LogMyWay.Droid
 			}
 		}
 
+
+		public void OnSetGridStep(bool pRedraw)
+		{
+			if(pRedraw)
+				DrawLocation(LocationManager.CurrentLocation);
+		}
+
+		/*private void RedrawCurrentLocation()
+		{
+			NativeMap.Clear();
+			DrawLocation(LocationManager.CurrentLocation);
+		}*/
+
 		/// <summary>
+		/// Clear current map.
 		/// Draw location grid, center and all logged positions with given grid step size
 		/// </summary>
 		public void DrawLocation(LocationLog pLocation)
 		{
+			NativeMap.Clear();
+
 			LogMyWay.Debug.Log($"DrawLocation {pLocation.Name}, " +
 				$"center = {pLocation.Center.Latitude.ToString("0.00")},{pLocation.Center.Longitude.ToString("0.00")}");
 
 			NativeMap.Clear();
-			List<PolylineOptions> lines = ShapeGenerator.GetLines(pLocation, App.Current.Map.CurrentGridStep);
+			List<PolylineOptions> lines = ShapeGenerator.GetLines(pLocation, App.Current.LastGridStep);
 			foreach(PolylineOptions line in lines)
 			{
 				NativeMap.AddPolyline(line);
@@ -86,11 +101,13 @@ namespace LogMyWay.Droid
 			}
 		}
 
+
 		public void DrawLoggedPosition(Position pPosition)
 		{
 			PolygonOptions polygon = ShapeGenerator.GetPolygonOnPosition(
-				LocationManager.ActiveLocation, pPosition, App.Current.Map.CurrentGridStep);
+				LocationManager.CurrentLocation, pPosition, App.Current.LastGridStep);
 			NativeMap.AddPolygon(polygon);
 		}
+
 	}
 }

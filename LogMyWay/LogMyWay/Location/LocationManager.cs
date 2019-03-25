@@ -14,7 +14,7 @@ namespace LogMyWay.Location
 		private static CustomMap map => ((App)Application.Current).Map;
 
 		public static List<LocationLog> Locations = new List<LocationLog>();
-		public static LocationLog ActiveLocation;
+		public static LocationLog CurrentLocation;
 
 		/// <summary>
 		/// Moves map center to current position after obtaining it
@@ -49,10 +49,10 @@ namespace LogMyWay.Location
 			}
 			App.Current.MapPage.OnLocationsLoaded();
 
+			//EGridStep lastgridStep = App.Current.LastGridStep;
+
 			//set last active location
 			string lastLocation = App.Current.LastActiveLocation;
-			//todo: set last actve
-			//LocationLog activeLocation = Locations[0];
 			if(lastLocation == null)
 			{
 				Debug.Log($"activeLocation is null");
@@ -71,7 +71,7 @@ namespace LogMyWay.Location
 				return;
 			}
 
-			ActiveLocation = location;
+			CurrentLocation = location;
 			App.Current.LastActiveLocation = pLocationName;
 
 			//draw
@@ -100,10 +100,10 @@ namespace LogMyWay.Location
 
 		public static async void LogPosition(Position pPosition)
 		{
-			bool logged = ActiveLocation.LogPosition(pPosition);
+			bool logged = CurrentLocation.LogPosition(pPosition);
 			if(logged)
 				map.Renderer.DrawLoggedPosition(pPosition);
-			await DataManager.SaveLocation(ActiveLocation);
+			await DataManager.SaveLocation(CurrentLocation);
 		}
 
 		//public static async void CreateLocation(object sender, EventArgs e)

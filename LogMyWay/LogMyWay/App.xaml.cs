@@ -28,6 +28,21 @@ namespace LogMyWay
 			}
 		}
 
+		private const string lastGridStepKey = "LastGridStep";
+		public EGridStep LastGridStep
+		{
+			get
+			{
+				if(Current.Properties.ContainsKey(lastGridStepKey))
+					return (EGridStep)Current.Properties[lastGridStepKey];
+				return EGridStep.Small;
+			}
+			set
+			{
+				Current.Properties[lastGridStepKey] = (int)value;
+			}
+		}
+
 		public new static App Current;
 
 		public App()
