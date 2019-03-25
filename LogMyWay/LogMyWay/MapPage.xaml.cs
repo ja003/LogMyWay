@@ -180,6 +180,7 @@ namespace LogMyWay
 				);
 
 			LocationManager.LogPosition(currentDebugPosition);
+			customMap.Renderer.DrawDebugPosition(currentDebugPosition);
 		}
 		#endregion
 

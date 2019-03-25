@@ -84,11 +84,11 @@ namespace LogMyWay.Droid
 		}
 				
 
-		public static CircleOptions GetCenterCircle(LocationLog pLocation)
+		public static CircleOptions GetCircle(Position pCenter, int pRadius = 50)
 		{
 			CircleOptions centerCircle = new CircleOptions();
-			centerCircle.InvokeCenter(new LatLng(pLocation.Center.Latitude, pLocation.Center.Longitude));
-			centerCircle.InvokeRadius(50);
+			centerCircle.InvokeCenter(new LatLng(pCenter.Latitude, pCenter.Longitude));
+			centerCircle.InvokeRadius(pRadius);
 			centerCircle.InvokeFillColor(Android.Graphics.Color.DarkSlateBlue);
 			centerCircle.InvokeStrokeColor(0X66FF0000);
 			centerCircle.InvokeStrokeWidth(2);

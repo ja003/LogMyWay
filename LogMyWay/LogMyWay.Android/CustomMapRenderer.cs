@@ -93,7 +93,7 @@ namespace LogMyWay.Droid
 				NativeMap.AddPolyline(line);
 			}
 
-			CircleOptions gridCenterCircle = ShapeGenerator.GetCenterCircle(pLocation);
+			CircleOptions gridCenterCircle = ShapeGenerator.GetCircle(pLocation.Center);
 			NativeMap.AddCircle(gridCenterCircle);
 
 			//todo: draw all logged positions
@@ -122,5 +122,10 @@ namespace LogMyWay.Droid
 			NativeMap.AddPolygon(polygon);
 		}
 
+		public void DrawDebugPosition(Position pPosition)
+		{
+			CircleOptions gridCenterCircle = ShapeGenerator.GetCircle(pPosition, 25);			
+			NativeMap.AddCircle(gridCenterCircle);
+		}
 	}
 }
