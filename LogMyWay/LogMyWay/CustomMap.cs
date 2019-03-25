@@ -6,5 +6,6 @@ namespace LogMyWay
 	{
 		public ICustomMapRenderer Renderer;
 
+		public EGridStep CurrentGridStep = EGridStep.Small;
 	}
 }

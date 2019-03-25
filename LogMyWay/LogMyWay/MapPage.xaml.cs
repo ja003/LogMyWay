@@ -1,6 +1,7 @@
 ﻿using LogMyWay.Location;
 using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
 namespace LogMyWay
@@ -51,6 +52,7 @@ namespace LogMyWay
 		}
 
 		private bool isDebugVisible;
+
 		public bool IsDebugVisible
 		{
 			get => isDebugVisible;
@@ -63,6 +65,10 @@ namespace LogMyWay
 
 		public string NewLocationName => entryNewLocationName.Text;
 		#endregion
+
+		public const double MIN_GRID_STEP = 0.001f; //todo: move to values
+
+		private Position currentDebugPosition;
 
 		public MapPage()
 		{
@@ -101,9 +107,97 @@ namespace LogMyWay
 			}
 		}
 
+		internal void OnLocationSet()
+		{
+			Debug.Log($"OnLocationSet {LocationManager.ActiveLocation.Name}");
+			currentDebugPosition = LocationManager.ActiveLocation.Center;
+		}
+
+		#region arrows
 		private void BtnArrowUp_Clicked(object sender, EventArgs e)
 		{
 			Debug.Log("move up");
+			MoveDebugPosition(EDirection.Up);
 		}
+
+		private void BtnArrowLeft_Clicked(object sender, EventArgs e)
+		{
+			MoveDebugPosition(EDirection.Left);
+		}
+
+		private void BtnArrowDown_Clicked(object sender, EventArgs e)
+		{
+			MoveDebugPosition(EDirection.Down);
+		}
+
+		private void BtnArrowRight_Clicked(object sender, EventArgs e)
+		{
+			MoveDebugPosition(EDirection.Right);
+		}
+
+		private void MoveDebugPosition(EDirection pDirection)
+		{
+			Position move = new Position(0, 0);
+			switch(pDirection)
+			{
+				case EDirection.Up:
+					move = new Position(MIN_GRID_STEP, 0);
+					break;
+				case EDirection.Right:
+					move = new Position(0, MIN_GRID_STEP);
+					break;
+				case EDirection.Down:
+					move = new Position(-MIN_GRID_STEP, 0);
+					break;
+				case EDirection.Left:
+					move = new Position(0, -MIN_GRID_STEP);
+					break;
+
+			}
+			currentDebugPosition = new Position(
+				currentDebugPosition.Latitude + move.Latitude,
+				currentDebugPosition.Longitude + move.Longitude
+				);
+
+			LocationManager.LogPosition(currentDebugPosition);
+		}
+		#endregion
+
+		private void BtnLog_Clicked(object sender, EventArgs e)
+		{
+			LocationManager.LogPosition(currentDebugPosition);
+		}
+
+		#region grid step
+
+		private void BtnGridStepSmall_Clicked(object sender, EventArgs e)
+		{
+			SetGridStep(EGridStep.Small);
+		}
+
+		private void BtnGridStepMedium_Clicked(object sender, EventArgs e)
+		{
+			SetGridStep(EGridStep.Medium);
+		}
+
+		private void BtnGridStepLarge_Clicked(object sender, EventArgs e)
+		{
+			SetGridStep(EGridStep.Large);
+		}
+
+		private void SetGridStep(EGridStep pStep)
+		{
+			GetMap().CurrentGridStep = pStep;
+		}
+		#endregion
+
+		private enum EDirection
+		{
+			Up,
+			Right,
+			Down,
+			Left
+		}
+
 	}
 }

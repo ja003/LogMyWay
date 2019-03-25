@@ -49,7 +49,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
-			<!--  detail  -->
+			<!--  grid step  -->
 			<Grid
 				Grid.Row="0"
 				Grid.Column="0"
@@ -64,16 +64,22 @@
 				</Grid.RowDefinitions>
 
 				<Button
+					x:Name="btnGridStepSmall"
 					Grid.Row="0"
 					Grid.Column="0"
+					Clicked="BtnGridStepSmall_Clicked"
 					Text="1x" />
 				<Button
+					x:Name="btnGridStepMedium"
 					Grid.Row="0"
 					Grid.Column="1"
+					Clicked="BtnGridStepMedium_Clicked"
 					Text="2x" />
 				<Button
+					x:Name="btnGridStepLarge"
 					Grid.Row="0"
 					Grid.Column="2"
+					Clicked="BtnGridStepLarge_Clicked"
 					Text="3x" />
 			</Grid>
 
@@ -185,25 +191,28 @@
 					Grid.Column="1"
 					BackgroundColor="Yellow"
 					Clicked="BtnArrowUp_Clicked"
-					Text="up" />
+					Text="A" />
 				<Button
 					x:Name="btnArrowLeft"
 					Grid.Row="1"
 					Grid.Column="0"
 					BackgroundColor="Yellow"
-					Text="left" />
+					Clicked="BtnArrowLeft_Clicked"
+					Text="" />
 				<Button
 					x:Name="btnArrowDown"
 					Grid.Row="1"
 					Grid.Column="1"
 					BackgroundColor="Yellow"
-					Text="down" />
+					Clicked="BtnArrowDown_Clicked"
+					Text="v" />
 				<Button
 					x:Name="btnArrowRight"
 					Grid.Row="1"
 					Grid.Column="2"
 					BackgroundColor="Yellow"
-					Text="right" />
+					Clicked="BtnArrowRight_Clicked"
+					Text="" />
 
 			</Grid>
 
@@ -213,28 +222,10 @@
 				Grid.Row="0"
 				Grid.Column="2"
 				BackgroundColor="Green"
+				Clicked="BtnLog_Clicked"
 				Text="log" />
 
-
 		</Grid>
-
-		<!--<f9p:Label
-                   x:Name="debugTextLabel"
-                   Text="{Binding DebugText}"
-            Margin="5"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="End"
-            AnchorY="1"
-                    Lines="0"
-
-                   BackgroundColor="Coral"
-                    TextColor="Black"
-        />-->
-
-		<!--<Grid
-            AbsoluteLayout.LayoutBounds=".5, .95, 1, .2"
-            AbsoluteLayout.LayoutFlags="All"BackgroundColor="Blue"
-            ></Grid>-->
 
 	</AbsoluteLayout>
 </ContentPage>

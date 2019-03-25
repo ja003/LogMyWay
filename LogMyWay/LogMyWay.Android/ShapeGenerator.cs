@@ -1,5 +1,7 @@
 ﻿using Android.Gms.Maps.Model;
 using LogMyWay.Location;
+using LogMyWay.Structures;
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms.Maps;
 
@@ -95,7 +97,7 @@ namespace LogMyWay.Droid
 			return pLocationRadiusSteps / GetRadiusStep(pStep);
 		}
 
-		public static CircleOptions GetCenter(LocationLog pLocation)
+		public static CircleOptions GetCenterCircle(LocationLog pLocation)
 		{
 			CircleOptions centerCircle = new CircleOptions();
 			centerCircle.InvokeCenter(new LatLng(pLocation.Center.Latitude, pLocation.Center.Longitude));
@@ -106,16 +108,29 @@ namespace LogMyWay.Droid
 			return centerCircle;
 		}
 
-		private struct GridLine
+		/// <summary>
+		/// Creates polygon on given location's grid containing given position with given stepSize
+		/// </summary>
+		public static PolygonOptions GetPolygonOnPosition(LocationLog pLocation, Position pPosition, EGridStep pStep)
 		{
-			public Position Start { get; private set; }
-			public Position End { get; private set; }
+			GridArea area = pLocation.GetAreaOnPosition(pPosition, GetStepSize(pStep));
 
-			public GridLine(Position pStart, Position pEnd) : this()
-			{
-				this.Start = pStart;
-				this.End = pEnd;
-			}
+			PolygonOptions polygon = new PolygonOptions();
+			polygon.InvokeFillColor(0x66FF0000);
+			polygon.InvokeStrokeColor(0x660000FF);
+			polygon.InvokeStrokeWidth(10.0f);
+
+			polygon.Add(new LatLng(area.TopLeft.Latitude, area.TopLeft.Longitude));
+			polygon.Add(new LatLng(area.BotRight.Latitude, area.TopLeft.Longitude));
+			polygon.Add(new LatLng(area.BotRight.Latitude, area.BotRight.Longitude));
+			polygon.Add(new LatLng(area.TopLeft.Latitude, area.BotRight.Longitude));
+
+			return polygon;
 		}
+
+		//private static GridArea GetAreaOnPosition(LocationLog pLocation, Position pPosition, EGridStep pStep)
+		//{
+		//	return pLocation.GetAreaOnPosition(pPosition, GetStepSize(pStep));
+		//}			
 	}
 }
