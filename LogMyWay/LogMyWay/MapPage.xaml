@@ -182,6 +182,14 @@
 				</Grid.RowDefinitions>
 
 				<Button
+					x:Name="btnClearMap"
+					Grid.Row="0"
+					Grid.Column="2"
+					BackgroundColor="Red"
+					Clicked="BtnClearMap_Clicked"
+					Text="X" />
+
+				<Button
 					x:Name="btnArrowUp"
 					Grid.Row="0"
 					Grid.Column="1"
@@ -219,7 +227,7 @@
 				Grid.Column="2"
 				BackgroundColor="Green"
 				Clicked="BtnLog_Clicked"
-				Text="log" />
+				Text="clear log" />
 
 		</Grid>
 

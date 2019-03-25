@@ -8,5 +8,10 @@ namespace LogMyWay
 		{
 			App.Current.MapPage.DebugText += Environment.NewLine + pText;
 		}
+
+		public static void Clear()
+		{
+			App.Current.MapPage.DebugText = "cleared";
+		}
 	}
 }

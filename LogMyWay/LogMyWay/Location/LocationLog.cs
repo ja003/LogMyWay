@@ -60,12 +60,12 @@ namespace LogMyWay.Location
 		private Position GetPositionOfLoggedIndex(Tuple<int, int> pIndex)
 		{
 			int y = pIndex.Item2 > 0 ? -1 : 1;
-			int x = pIndex.Item1 < 0 ? 1 : -1;
+			int x = pIndex.Item1 > 0 ? -1 : 1;
 			double pGridStepSize = GridValues.GetStepSize(EGridStep.Small);
 
 			Position pos = new Position(
-				Center.Latitude + (pIndex.Item2 + y) * pGridStepSize,
-				Center.Longitude + (pIndex.Item1 + x) * pGridStepSize);
+				Center.Latitude + (pIndex.Item2 + y/2) * pGridStepSize,
+				Center.Longitude + (pIndex.Item1 + x/2) * pGridStepSize);
 
 			return pos;
 		}
@@ -85,8 +85,6 @@ namespace LogMyWay.Location
 		/// Item1 = x = longitude
 		/// Item2 = y = latitude
 		/// </summary>
-		/// <param name="position"></param>
-		/// <returns></returns>
 		public Tuple<int, int> GetIndexInGrid(Position position, double pGridStepSize)
 		{
 			//central coordinate system doesnt contain 0 index
@@ -94,15 +92,23 @@ namespace LogMyWay.Location
 			double xDouble = (position.Longitude - Center.Longitude) / pGridStepSize;
 			int xSign = Math.Sign(xDouble);
 			int x = (int)Math.Ceiling(Math.Abs(xDouble)) * xSign;
+			if(x == 0)
+				x++;
 
 			double yDouble = (position.Latitude - Center.Latitude) / pGridStepSize;
 			int ySign = Math.Sign(yDouble);
 			int y = (int)Math.Ceiling(Math.Abs(yDouble)) * ySign;
-
+			if(y == 0)
+				y++;
 
 			System.Diagnostics.Debug.Write($"@@@@@ GetIndexInGrid {position.Latitude},{position.Longitude} = [{x},{y}]");
 
 			return new Tuple<int, int>(x, y);
+		}
+
+		public void Clear()
+		{
+			loggedPositionsIndices.Clear();
 		}
 	}
 }

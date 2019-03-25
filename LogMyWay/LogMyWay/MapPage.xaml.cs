@@ -185,7 +185,8 @@ namespace LogMyWay
 
 		private void BtnLog_Clicked(object sender, EventArgs e)
 		{
-			LocationManager.LogPosition(currentDebugPosition);
+			Debug.Clear();
+			//LocationManager.LogPosition(currentDebugPosition);
 		}
 
 		#region grid step
@@ -219,5 +220,10 @@ namespace LogMyWay
 			Left
 		}
 
+		private void BtnClearMap_Clicked(object sender, EventArgs e)
+		{
+			LocationManager.CurrentLocation.Clear();
+			customMap.Renderer.DrawLocation(LocationManager.CurrentLocation);
+		}
 	}
 }
