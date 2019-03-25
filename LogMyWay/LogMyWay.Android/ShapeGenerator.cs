@@ -1,7 +1,6 @@
 ﻿using Android.Gms.Maps.Model;
 using LogMyWay.Location;
 using LogMyWay.Structures;
-using System;
 using System.Collections.Generic;
 using Xamarin.Forms.Maps;
 
@@ -13,34 +12,57 @@ namespace LogMyWay.Droid
 
 		public static List<PolylineOptions> GetLines(LocationLog pLocation, EGridStep pStep)
 		{
-			Position topLeft = new Position(pLocation.Center.Latitude + pLocation.RadiusSteps * MIN_GRID_STEP, pLocation.Center.Longitude - pLocation.RadiusSteps * MIN_GRID_STEP);
+			Position center = pLocation.Center;
+			Position topLeft = new Position(
+				center.Latitude + pLocation.RadiusSteps * MIN_GRID_STEP,
+				center.Longitude - pLocation.RadiusSteps * MIN_GRID_STEP);
+			Position botRight = new Position(
+				center.Latitude - pLocation.RadiusSteps * MIN_GRID_STEP,
+				center.Longitude + pLocation.RadiusSteps * MIN_GRID_STEP);
 
-			double latitude = topLeft.Latitude;
-			double longitude = topLeft.Longitude;
+			double latitude = center.Latitude;
+			double longitude = center.Longitude;
 
 			List<GridLine> lines = new List<GridLine>();
 			int steps = GetStepsCount(pLocation.RadiusSteps, pStep);
 			double stepSize = GetStepSize(pStep);
 
-			//top to bottom
-			for(int y = 0; y <= 2 * steps; y++)
+			//center<inc> to top
+			for(int y = 0; y <= steps; y++)
 			{
-				latitude = topLeft.Latitude - y * stepSize; //from top to bottom => '-'
+				latitude = center.Latitude + y * stepSize;
 
 				lines.Add(new GridLine(
-					 new Position(latitude, longitude),
-					 new Position(latitude, longitude + 2 * steps * stepSize)));
+					 new Position(latitude, topLeft.Longitude),
+					 new Position(latitude, botRight.Longitude)));
+			}
+			//center<exc> to bot
+			for(int y = 1; y <= steps; y++)
+			{
+				latitude = center.Latitude - y * stepSize;
+
+				lines.Add(new GridLine(
+					 new Position(latitude, topLeft.Longitude),
+					 new Position(latitude, botRight.Longitude)));
 			}
 
-			//left to right
-			latitude = topLeft.Latitude; //reset
-			for(int x = 0; x <= 2 * steps; x++)
+			//center<inc> to left
+			for(int x = 0; x <= steps; x++)
 			{
-				longitude = topLeft.Longitude + x * stepSize;
+				longitude = center.Longitude - x * stepSize;
 
 				lines.Add(new GridLine(
-					 new Position(latitude, longitude),
-					 new Position(latitude - 2 * steps * stepSize, longitude)));
+					 new Position(topLeft.Latitude, longitude),
+					 new Position(botRight.Latitude, longitude)));
+			}
+			//center<exc> to right
+			for(int x = 1; x <= steps; x++)
+			{
+				longitude = center.Longitude + x * stepSize;
+
+				lines.Add(new GridLine(
+					 new Position(topLeft.Latitude, longitude),
+					 new Position(botRight.Latitude, longitude)));
 			}
 
 			List<PolylineOptions> polyLines = new List<PolylineOptions>();
