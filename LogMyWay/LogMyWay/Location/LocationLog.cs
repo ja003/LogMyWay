@@ -10,13 +10,26 @@ namespace LogMyWay.Location
 		public string Name;
 		public Position Center;
 		public int RadiusSteps; //number of minimum size steps between center and border
-		public List<Position> LoggedPositions = new List<Position>();
+										//public List<Position> LoggedPositions = new List<Position>();
+
+		public HashSet<Tuple<int, int>> loggedPositionsIndices;
 
 		public LocationLog(string pName, Position pCenter, int pRadiusSteps)
 		{
 			Name = pName;
 			Center = pCenter;
 			RadiusSteps = pRadiusSteps;
+			loggedPositionsIndices = new HashSet<Tuple<int, int>>();
+		}
+
+		public List<Position> GetLoggedPositions()
+		{
+			List<Position> positions = new List<Position>();
+			foreach(Tuple<int, int> index in loggedPositionsIndices)
+			{
+				positions.Add(GetPositionOfLoggedIndex(index));
+			}
+			return positions;
 		}
 
 		/// <summary>
@@ -25,13 +38,14 @@ namespace LogMyWay.Location
 		/// </summary>
 		public bool LogPosition(Position pPosition)
 		{
-			if(LoggedPositions == null)
-			{
-				LoggedPositions = new List<Position>();
-			}
-			LoggedPositions.Add(pPosition);
+			Tuple<int, int> index = GetIndexInGrid(pPosition, GridValues.GetStepSize(EGridStep.Small));
 
-			//todo: check if visited
+			bool alreadyLogged = loggedPositionsIndices.Contains(index);
+			Debug.Log($"LogPosition {index}, logged = {alreadyLogged}");
+			if(alreadyLogged)
+				return false; //this area has been already visited => dont log it
+
+			loggedPositionsIndices.Add(index);
 			return true;
 		}
 
@@ -41,6 +55,19 @@ namespace LogMyWay.Location
 		public GridArea GetAreaOnPosition(Position position, double pGridStepSize)
 		{
 			return GetAreaOnIndex(GetIndexInGrid(position, pGridStepSize), pGridStepSize);
+		}
+
+		private Position GetPositionOfLoggedIndex(Tuple<int, int> pIndex)
+		{
+			int y = pIndex.Item2 > 0 ? -1 : 1;
+			int x = pIndex.Item1 < 0 ? 1 : -1;
+			double pGridStepSize = GridValues.GetStepSize(EGridStep.Small);
+
+			Position pos = new Position(
+				Center.Latitude + (pIndex.Item2 + y) * pGridStepSize,
+				Center.Longitude + (pIndex.Item1 + x) * pGridStepSize);
+
+			return pos;
 		}
 
 		private GridArea GetAreaOnIndex(Tuple<int, int> pIndex, double pGridStepSize)
@@ -60,7 +87,7 @@ namespace LogMyWay.Location
 		/// </summary>
 		/// <param name="position"></param>
 		/// <returns></returns>
-		private Tuple<int, int> GetIndexInGrid(Position position, double pGridStepSize)
+		public Tuple<int, int> GetIndexInGrid(Position position, double pGridStepSize)
 		{
 			//central coordinate system doesnt contain 0 index
 
@@ -72,19 +99,6 @@ namespace LogMyWay.Location
 			int ySign = Math.Sign(yDouble);
 			int y = (int)Math.Ceiling(Math.Abs(yDouble)) * ySign;
 
-
-			//if(Math.Abs(xDouble) < 1)
-			//{
-			//	 xDouble += Math.Sign(xDouble);
-			//}
-			//int x = (int)xDouble;
-
-			//double yDouble = (position.Latitude - GridCenter.Latitude) / GridStepSize;
-			//if(Math.Abs(yDouble) < 1)
-			//{
-			//	 yDouble += Math.Sign(yDouble);
-			//}
-			//int y = (int)yDouble;
 
 			System.Diagnostics.Debug.Write($"@@@@@ GetIndexInGrid {position.Latitude},{position.Longitude} = [{x},{y}]");
 

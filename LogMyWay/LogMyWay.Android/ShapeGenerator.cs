@@ -8,24 +8,19 @@ namespace LogMyWay.Droid
 {
 	public static class ShapeGenerator
 	{
-		public const double MIN_GRID_STEP = 0.001f;
 
 		public static List<PolylineOptions> GetLines(LocationLog pLocation, EGridStep pStep)
 		{
 			Position center = pLocation.Center;
-			Position topLeft = new Position(
-				center.Latitude + pLocation.RadiusSteps * MIN_GRID_STEP,
-				center.Longitude - pLocation.RadiusSteps * MIN_GRID_STEP);
-			Position botRight = new Position(
-				center.Latitude - pLocation.RadiusSteps * MIN_GRID_STEP,
-				center.Longitude + pLocation.RadiusSteps * MIN_GRID_STEP);
+			Position topLeft = GridValues.GetLocationCorner(pLocation, true);
+			Position botRight = GridValues.GetLocationCorner(pLocation, false);
 
 			double latitude = center.Latitude;
 			double longitude = center.Longitude;
 
 			List<GridLine> lines = new List<GridLine>();
-			int steps = GetStepsCount(pLocation.RadiusSteps, pStep);
-			double stepSize = GetStepSize(pStep);
+			int steps = GridValues.GetStepsCount(pLocation.RadiusSteps, pStep);
+			double stepSize = GridValues.GetStepSize(pStep);
 
 			//center<inc> to top
 			for(int y = 0; y <= steps; y++)
@@ -78,29 +73,7 @@ namespace LogMyWay.Droid
 
 			return polyLines;
 		}
-
-		private static int GetRadiusStep(EGridStep pStep)
-		{
-			int radiusStep = 1;
-			switch(pStep)
-			{
-				case EGridStep.Small:
-					radiusStep = 1;
-					break;
-				case EGridStep.Medium:
-					radiusStep = 2;
-					break;
-				case EGridStep.Large:
-					radiusStep = 3;
-					break;
-			}
-			return radiusStep;
-		}
-
-		private static double GetStepSize(EGridStep pStep)
-		{
-			return MIN_GRID_STEP * GetRadiusStep(pStep);
-		}
+				
 
 		private static PolylineOptions GetLine()
 		{
@@ -109,15 +82,7 @@ namespace LogMyWay.Droid
 			lineOptions.InvokeWidth(5);
 			return lineOptions;
 		}
-
-		/// <summary>
-		/// Conversion of radius steps based on GridStep. 
-		/// EGridStep.Small => returns pLocationRadiusSteps
-		/// </summary>
-		private static int GetStepsCount(int pLocationRadiusSteps, EGridStep pStep)
-		{
-			return pLocationRadiusSteps / GetRadiusStep(pStep);
-		}
+				
 
 		public static CircleOptions GetCenterCircle(LocationLog pLocation)
 		{
@@ -135,7 +100,7 @@ namespace LogMyWay.Droid
 		/// </summary>
 		public static PolygonOptions GetPolygonOnPosition(LocationLog pLocation, Position pPosition, EGridStep pStep)
 		{
-			GridArea area = pLocation.GetAreaOnPosition(pPosition, GetStepSize(pStep));
+			GridArea area = pLocation.GetAreaOnPosition(pPosition, GridValues.GetStepSize(pStep));
 
 			PolygonOptions polygon = new PolygonOptions();
 			polygon.InvokeFillColor(0x66FF0000);

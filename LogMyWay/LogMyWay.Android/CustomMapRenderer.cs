@@ -4,6 +4,7 @@ using Android.Gms.Maps.Model;
 using LogMyWay;
 using LogMyWay.Droid;
 using LogMyWay.Location;
+using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -80,6 +81,7 @@ namespace LogMyWay.Droid
 		public void DrawLocation(LocationLog pLocation)
 		{
 			NativeMap.Clear();
+			drawnIndices.Clear();
 
 			LogMyWay.Debug.Log($"DrawLocation {pLocation.Name}, " +
 				$"center = {pLocation.Center.Latitude.ToString("0.00")},{pLocation.Center.Longitude.ToString("0.00")}");
@@ -95,15 +97,26 @@ namespace LogMyWay.Droid
 			NativeMap.AddCircle(gridCenterCircle);
 
 			//todo: draw all logged positions
-			foreach(Position position in pLocation.LoggedPositions)
+			foreach(Position position in pLocation.GetLoggedPositions())
 			{
 				DrawLoggedPosition(position);
 			}
 		}
 
+		private HashSet<Tuple<int, int>> drawnIndices = new HashSet<Tuple<int, int>>();
 
 		public void DrawLoggedPosition(Position pPosition)
 		{
+			Tuple<int, int> index = LocationManager.CurrentLocation.GetIndexInGrid(
+				pPosition, GridValues.GetStepSize(App.Current.LastGridStep));
+
+			LogMyWay.Debug.Log($"DrawLoggedPosition {index}");
+			if(drawnIndices.Contains(index))
+				return;
+			LogMyWay.Debug.Log($"- ok");
+
+			drawnIndices.Add(index);
+
 			PolygonOptions polygon = ShapeGenerator.GetPolygonOnPosition(
 				LocationManager.CurrentLocation, pPosition, App.Current.LastGridStep);
 			NativeMap.AddPolygon(polygon);

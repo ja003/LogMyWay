@@ -101,6 +101,7 @@ namespace LogMyWay.Location
 		public static async void LogPosition(Position pPosition)
 		{
 			bool logged = CurrentLocation.LogPosition(pPosition);
+
 			if(logged)
 				map.Renderer.DrawLoggedPosition(pPosition);
 			await DataManager.SaveLocation(CurrentLocation);

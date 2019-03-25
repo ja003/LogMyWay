@@ -66,7 +66,6 @@ namespace LogMyWay
 		public string NewLocationName => entryNewLocationName.Text;
 		#endregion
 
-		public const double MIN_GRID_STEP = 0.001f; //todo: move to values
 
 		private Position currentDebugPosition;
 
@@ -138,7 +137,6 @@ namespace LogMyWay
 		#region arrows
 		private void BtnArrowUp_Clicked(object sender, EventArgs e)
 		{
-			Debug.Log("move up");
 			MoveDebugPosition(EDirection.Up);
 		}
 
@@ -163,16 +161,16 @@ namespace LogMyWay
 			switch(pDirection)
 			{
 				case EDirection.Up:
-					move = new Position(MIN_GRID_STEP, 0);
+					move = new Position(GridValues.MIN_GRID_STEP, 0);
 					break;
 				case EDirection.Right:
-					move = new Position(0, MIN_GRID_STEP);
+					move = new Position(0, GridValues.MIN_GRID_STEP);
 					break;
 				case EDirection.Down:
-					move = new Position(-MIN_GRID_STEP, 0);
+					move = new Position(-GridValues.MIN_GRID_STEP, 0);
 					break;
 				case EDirection.Left:
-					move = new Position(0, -MIN_GRID_STEP);
+					move = new Position(0, -GridValues.MIN_GRID_STEP);
 					break;
 
 			}
