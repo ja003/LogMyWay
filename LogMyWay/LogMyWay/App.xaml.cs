@@ -13,6 +13,21 @@ namespace LogMyWay
 		public CustomMap Map => MapPage.GetMap();
 		public MapPage MapPage => (MapPage) MainPage;
 
+		private const string lastActiveLocationKey = "LastActiveLocation";
+		public string LastActiveLocation
+		{
+			get
+			{
+				if(Current.Properties.ContainsKey(lastActiveLocationKey))
+					return (string)Current.Properties[lastActiveLocationKey];
+				return null;
+			}
+			set
+			{
+				Current.Properties[lastActiveLocationKey] = value;
+			}
+		}
+
 		public new static App Current;
 
 		public App()

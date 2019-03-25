@@ -47,16 +47,19 @@ namespace LogMyWay.Location
 				Debug.Log($"{savedLocationsNames.IndexOf(locationName)} = {locationName}");
 				Locations.Add(await DataManager.LoadLocation(locationName));
 			}
-
-			//todo: set last actve
-			LocationLog activeLocation = Locations[0];
-			if(activeLocation == null)
-			{
-				Debug.Log($"activeLocation is null");
-			}
 			App.Current.MapPage.OnLocationsLoaded();
 
-			SetActiveLocation(activeLocation.Name);
+			//set last active location
+			string lastLocation = App.Current.LastActiveLocation;
+			//todo: set last actve
+			//LocationLog activeLocation = Locations[0];
+			if(lastLocation == null)
+			{
+				Debug.Log($"activeLocation is null");
+				return;
+			}
+
+			SetActiveLocation(lastLocation);
 		}
 
 		public static void SetActiveLocation(string pLocationName)
@@ -69,6 +72,8 @@ namespace LogMyWay.Location
 			}
 
 			ActiveLocation = location;
+			App.Current.LastActiveLocation = pLocationName;
+
 			//draw
 			Debug.Log($"SetActiveLocation {location.Name}");
 			map.Renderer.DrawLocation(location);
