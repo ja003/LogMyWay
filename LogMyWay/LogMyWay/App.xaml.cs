@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LogMyWay.Location;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -45,6 +48,8 @@ namespace LogMyWay
 
 		public new static App Current;
 
+		//IGeolocator locator;
+
 		public App()
 		{
 			InitializeComponent();
@@ -52,7 +57,20 @@ namespace LogMyWay
 
 			MainPage = new MapPage();
 
+
 			//MapPage.OnStart();
+			//locator = CrossGeolocator.Current;
+
+			//locator.StartListeningAsync(new TimeSpan(0, 0, 5), 1); //min 5 secs between updates, min 1 meter difference
+
+			//locator.PositionChanged += GpsManager.OnPositionChanged;
+
+			/*locator.PositionChanged += (sender, e) => {
+				var position = e.Position;
+
+				latitudeLabel.Text = position.Latitude;
+				longitudeLabel.Text = position.Longitude;
+			};*/
 		}
 
 		//public event EventHandler OnStarted;

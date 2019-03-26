@@ -80,8 +80,10 @@ namespace LogMyWay
 			  
 		public void OnStart()
 		{
-			Debug.Log("OnStart");
+			//Debug.Log("OnStart");
 			LocationManager.LoadSavedLocations();
+
+
 		}
 
 		public CustomMap GetMap()
@@ -98,8 +100,11 @@ namespace LogMyWay
 			{
 				pickerLocation.Items.Add(location.Name);
 			}
+
+			GpsManager.Init();
+
 		}
-		
+
 		/// <summary>
 		/// Select active location
 		/// </summary>

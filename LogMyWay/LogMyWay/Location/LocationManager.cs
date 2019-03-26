@@ -30,7 +30,7 @@ namespace LogMyWay.Location
 
 		public static async void LoadSavedLocations()
 		{
-			Debug.Log("LoadSavedLocations");
+			//Debug.Log("LoadSavedLocations");
 			List<string> savedLocationsNames = await DataManager.GetSavedLocationsNames();
 
 			bool noLocationSaved = savedLocationsNames == null || savedLocationsNames.Count == 0;
@@ -41,10 +41,10 @@ namespace LogMyWay.Location
 				return;
 			}
 
-			Debug.Log($"#locations = {savedLocationsNames.Count}");
+			//Debug.Log($"#locations = {savedLocationsNames.Count}");
 			foreach(string locationName in savedLocationsNames)
 			{
-				Debug.Log($"{savedLocationsNames.IndexOf(locationName)} = {locationName}");
+				//Debug.Log($"{savedLocationsNames.IndexOf(locationName)} = {locationName}");
 				Locations.Add(await DataManager.LoadLocation(locationName));
 			}
 			App.Current.MapPage.OnLocationsLoaded();
@@ -100,6 +100,12 @@ namespace LogMyWay.Location
 
 		public static async void LogPosition(Position pPosition)
 		{
+			if(CurrentLocation == null)
+			{
+				Debug.Log("Error: CurrentLocation null");
+				return;
+			}
+
 			bool logged = CurrentLocation.LogPosition(pPosition);
 
 			if(logged)
